@@ -40,11 +40,11 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1UD-Op-zF0">
-                                                    <rect key="frame" x="202" y="11.5" width="192" height="21"/>
+                                                    <rect key="frame" x="202" y="14.5" width="192" height="17"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="192" id="e5b-Nh-yFZ"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -71,7 +71,7 @@
                                             <outlet property="description_label" destination="1UD-Op-zF0" id="zy4-aO-yLr"/>
                                             <outlet property="icon" destination="Acw-gd-9KU" id="Fts-hE-UDJ"/>
                                             <outlet property="label" destination="zYZ-DC-rKl" id="uIc-1a-3DI"/>
-                                            <segue destination="TpJ-G9-gcH" kind="show" identifier="" id="nUi-ww-gNH"/>
+                                            <segue destination="TpJ-G9-gcH" kind="show" identifier="Subject" id="gq2-7c-iMa"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -136,7 +136,7 @@
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y77-d2-FUd">
                                                     <rect key="frame" x="0.0" y="5" width="370" height="41"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                     <state key="normal" title="Answer Choice One"/>
                                                     <connections>
                                                         <action selector="answerChoiceSelected:" destination="TpJ-G9-gcH" eventType="touchUpInside" id="2uH-C1-7oa"/>
@@ -256,7 +256,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="sDD-UV-pjh"/>
-        <segue reference="Kgy-E1-w5G"/>
+        <segue reference="gq2-7c-iMa"/>
     </inferredMetricsTieBreakers>
 </document>

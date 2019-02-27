@@ -7,11 +7,12 @@
 //
 
 import UIKit
+import Alamofire
 
 class ViewController: UIViewController {
-  var questions : [String] = ["How old am I?", "What is my name?"]
-  let answer_choices : [[String]] = [["22 years old", "23 years old", "21 years old", "29 years old"], ["Charlie", "Sharon", "Conner", "Hannah"]]
-  let correct_answer_choices : [Int] = [2, 2]
+  var questions : [String] = []
+  var answer_choices : [[String]] = [[]]
+  var correct_answer_choices : [Int] = []
   var question_number : Int = 0
   var numCorrect : Int = 0
   
@@ -23,13 +24,16 @@ class ViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    question_label.text = questions[question_number]
-    collection.answer_choices = answer_choices
-    collection.correct_answer_choices = correct_answer_choices
-    collection.question_number = question_number
+    if questions.count > 0 {
+      question_label.text = questions[question_number]
+      collection.answer_choices = answer_choices
+      collection.correct_answer_choices = correct_answer_choices
+      collection.question_number = question_number
+      
+      collection.delegate = collection
+      collection.dataSource = collection
+    }
     
-    collection.delegate = collection
-    collection.dataSource = collection
     // Do any additional setup after loading the view, typically from a nib.
   }
   
@@ -45,11 +49,13 @@ class ViewController: UIViewController {
     case "Answer":
       _ = segue.source as! ViewController
       let destination = segue.destination as! AnswerController
-      destination.chosen_answer = chosen_answer
-      destination.correct_answer = collection.answer_choices[question_number][correct_answer_choices[question_number]]
-      destination.question_number = question_number
-      destination.questions = questions
-      destination.numCorrect = numCorrect
+      destination.chosen_answer = self.chosen_answer
+      destination.correct_answer = self.collection.answer_choices[self.question_number][self.correct_answer_choices[self.question_number] - 1]
+      destination.question_number = self.question_number
+      destination.questions = self.questions
+      destination.answer_choices = self.answer_choices
+      destination.correct_answer_choices = self.correct_answer_choices
+      destination.numCorrect = self.numCorrect
     default:
       NSLog("Unknown segue identifier: \(segue.identifier)")
     }
@@ -69,9 +75,9 @@ class QuestionController: UICollectionView, UICollectionViewDelegate, UICollecti
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AnswerChoice", for: indexPath) as! AnswerChoiceCell
     
     cell.setText(answer_choices[question_number][indexPath.item])
-//    if (indexPath.item != correct_answer_choices[question_number]) {
-//      cell.answer_choice.isEnabled = false
-//    }
+    //    if (indexPath.item != correct_answer_choices[question_number]) {
+    //      cell.answer_choice.isEnabled = false
+    //    }
     
     return cell
   }
@@ -95,6 +101,8 @@ class AnswerController : UIViewController {
   
   var question_number : Int = 0
   var questions : [String] = []
+  var answer_choices : [[String]] = [[]]
+  var correct_answer_choices : [Int] = []
   var numCorrect : Int = 0
   
   @IBOutlet weak var question_label: UILabel!
@@ -103,7 +111,6 @@ class AnswerController : UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    print(chosen_answer, correct_answer)
     if (chosen_answer.elementsEqual(correct_answer)) {
       label.text = "That's correct!"
       numCorrect += 1
@@ -113,7 +120,7 @@ class AnswerController : UIViewController {
     
     question_label.text = questions[question_number]
   }
-
+  
   @IBAction func nextButtonTouchUp(_ sender: Any) {
     if(question_number < questions.count - 1) {
       performSegue(withIdentifier: "Question", sender: self)
@@ -130,6 +137,9 @@ class AnswerController : UIViewController {
       destination.numTotal = questions.count
     case "Question":
       let destination = segue.destination as! ViewController
+      destination.questions = questions
+      destination.answer_choices = answer_choices
+      destination.correct_answer_choices = correct_answer_choices
       destination.question_number = question_number + 1
       destination.numCorrect = numCorrect
     default:
